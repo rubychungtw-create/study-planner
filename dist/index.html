@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="cloud.css" />
   <link rel="stylesheet" href="forest.css" />
   <link rel="stylesheet" href="homework.css" />
+  <link rel="stylesheet" href="focus-rescue.css" />
 </head>
 <body data-theme="pink">
   <main class="app">
@@ -45,7 +46,7 @@
         <section class="focus-widget single-goal-card" aria-labelledby="focusGoalTitle">
           <div class="kicker">ONE MISSION ONLY</div>
           <h2 id="focusGoalTitle">本輪唯一目標</h2>
-          <p>45 分鐘只打這一關，其他任務先不用想。</p>
+          <p>這一輪只打這一關，其他任務先不用想。</p>
           <label class="focus-goal-field"><span>選擇這輪要完成的任務</span><select id="focusGoalSelect"></select></label>
           <div class="goal-clear" id="focusGoalClear">選好目標後，通關條件會顯示在這裡。</div>
         </section>
@@ -53,7 +54,7 @@
           <div class="kicker">DISTRACTION PARKING</div>
           <h2 id="parkingTitle">分心停車場</h2>
           <p>突然想到的事先停在這裡，休息時間再處理。</p>
-          <form class="parking-form" id="distractionForm"><input id="distractionInput" maxlength="120" autocomplete="off" placeholder="例如：等等查社團訊息"><button type="submit">停放</button></form>
+          <form class="parking-form" id="distractionForm"><select id="distractionCategory" aria-label="分心原因"><option value="phone">想滑手機</option><option value="tired">太累</option><option value="stuck">題目卡住</option><option value="thought">想到別的事</option><option value="environment">環境干擾</option></select><input id="distractionInput" maxlength="120" autocomplete="off" placeholder="先記下來，等等再處理"><button type="submit">停放</button></form>
           <div class="parking-list" id="distractionList"></div>
         </section>
       </div>
@@ -63,7 +64,8 @@
           <h2 id="timerPhase">任務倒數</h2>
           <p id="timerHint">45 分鐘專注，撐到拆彈成功！</p>
           <div class="timer-focus-goal" id="focusGoalDisplay">尚未選擇本輪目標</div>
-          <div class="timer-rules"><span>專注 45 分</span><span>短休 10 分</span><span>第 4 組長休 30 分</span></div>
+          <div class="focus-length-picker" role="group" aria-label="選擇專注時間"><button type="button" data-timer-minutes="15">15 分鐘<small>先啟動</small></button><button type="button" data-timer-minutes="25">25 分鐘<small>穩定專注</small></button><button class="active" type="button" data-timer-minutes="45">45 分鐘<small>深度任務</small></button></div>
+          <div class="timer-rules"><span id="timerWorkRule">專注 45 分</span><span>短休 10 分</span><span>第 4 組長休 30 分</span></div>
         </div>
         <div class="bomb-clock" id="bombClock" aria-label="任務倒數 45 分鐘">
           <div class="bomb-fuse" aria-hidden="true"><span></span></div>
@@ -71,7 +73,9 @@
         </div>
         <div class="timer-control-area">
           <div class="timer-rounds" id="timerRounds" aria-label="四輪專注進度"></div>
-          <div class="timer-actions"><button class="timer-main-btn" id="timerStartPause" type="button">▶ 開始任務</button><button class="timer-reset-btn" id="timerReset" type="button">↻ 重設</button><button class="timer-expand-btn" id="timerFullscreen" type="button" aria-pressed="false">⛶ 放大專注</button></div>
+          <div class="timer-actions"><button class="timer-main-btn" id="timerStartPause" type="button">▶ 開始任務</button><button class="timer-rescue-btn" id="timerRescue" type="button">🛟 我卡住了</button><button class="timer-reset-btn" id="timerReset" type="button">↻ 重設</button><button class="timer-expand-btn" id="timerFullscreen" type="button" aria-pressed="false">⛶ 放大專注</button></div>
+          <form class="focus-quick-park" id="focusQuickPark"><select id="focusQuickCategory" aria-label="快速記錄分心原因"><option value="phone">手機</option><option value="tired">太累</option><option value="stuck">卡題</option><option value="thought">雜念</option><option value="environment">環境</option></select><input id="focusQuickDistraction" maxlength="120" autocomplete="off" placeholder="分心了？記一句就回來"><button type="submit">停放並回任務</button></form>
+          <div class="break-guide" id="breakGuide"><b>休息不是滑到停不下來</b><span>挑一件做完就回來：</span><div><label><input type="checkbox">喝水</label><label><input type="checkbox">伸展</label><label><input type="checkbox">上廁所</label><label><input type="checkbox">看遠處</label></div><small>短影音先不要打開，讓大腦真的休息。</small></div>
           <div class="focus-sound" aria-labelledby="focusSoundTitle">
             <div class="focus-sound-head"><b id="focusSoundTitle">🎧 專注音景</b><span id="focusSoundStatus">雨聲・計時開始時播放</span></div>
             <div class="focus-sound-options" role="group" aria-label="選擇專注音景"><button type="button" data-focus-sound="off">關閉</button><button type="button" data-focus-sound="rain">🌧 雨聲</button><button type="button" data-focus-sound="mozart">♫ 莫札特</button></div>
@@ -81,6 +85,7 @@
           <div class="timer-save-note">登入後自動儲存・換裝置也能接著倒數</div>
         </div>
       </section>
+      <section class="focus-report" aria-labelledby="focusReportTitle"><div class="focus-report-head"><div><div class="kicker">WEEKLY FOCUS REPORT</div><h2 id="focusReportTitle">本週分心報告</h2></div><span id="focusReportRange">本週</span></div><div class="focus-report-grid" id="focusReportGrid"></div><p class="focus-report-advice" id="focusReportAdvice">記錄第一次分心後，這裡會幫你找出最常見的原因。</p></section>
     </section>
 
     <section class="panel" id="todayPanel">
@@ -171,6 +176,14 @@
       </div>
     </section>
   </main>
+  <dialog id="rescueDialog" aria-labelledby="rescueDialogTitle">
+    <div class="dialog-body rescue-dialog-body">
+      <div class="kicker">FOCUS RESCUE</div><h2 id="rescueDialogTitle">卡住不是失敗，先選一條回來的路</h2>
+      <div class="rescue-options"><button type="button" data-rescue="five"><b>再做 5 分鐘</b><span>把這輪縮短，先保住節奏</span></button><button type="button" data-rescue="split"><b>拆成更小一步</b><span>只做下一個看得見的動作</span></button><button type="button" data-rescue="fifteen"><b>改成 15 分鐘</b><span>降低門檻，重新啟動</span></button><button type="button" data-rescue="question"><b>先記下問題</b><span>別卡死，留下疑問再往前</span></button></div>
+      <form class="rescue-step-form" id="rescueStepForm" hidden><label for="rescueStepInput">下一個小步驟</label><div><input id="rescueStepInput" maxlength="80" placeholder="例如：只做例題第 1 小題"><button type="submit">設為本輪目標</button></div></form>
+      <button class="rescue-close" id="closeRescueDialog" type="button">先回去繼續</button>
+    </div>
+  </dialog>
   <dialog id="questDialog" aria-labelledby="questDialogTitle">
     <div class="dialog-body">
       <h2 id="questDialogTitle">建立自訂關卡</h2>

@@ -4,6 +4,7 @@ const script = fs.readFileSync("dist/app.js", "utf8");
 const privacy = fs.readFileSync("dist/privacy.html", "utf8");
 const terms = fs.readFileSync("dist/terms.html", "utf8");
 const worker = fs.readFileSync("worker/index.mjs", "utf8");
+const focusRescue = fs.readFileSync("dist/focus-rescue.css", "utf8");
 new Function(script);
 if (!html.includes('id="questMatrix"') || !html.includes('id="googleSignIn"') || !html.includes('id="settingsDialog"')) {
   throw new Error("missing core UI");
@@ -30,6 +31,10 @@ if (!html.includes('id="forestSeasonBadge"') || !script.includes('function fores
 if (!script.includes('function recoveryQueueFor') || !script.includes("type:'自動補救'") || !script.includes('全部接續')) throw new Error("missing full automatic recovery flow");
 if (!script.includes('function importHomeworkTask') || !html.includes('id="recoveryPlan"')) throw new Error("missing homework import and recovery UI");
 if (!html.includes('id="focusSoundVolume"') || !script.includes('function startRainSound') || !script.includes('function startMozartSound') || !script.includes('function syncFocusSound')) throw new Error("missing focus sound controls");
+if (!html.includes('data-timer-minutes="15"') || !html.includes('data-timer-minutes="25"') || !html.includes('data-timer-minutes="45"') || !script.includes('function setWorkMinutes') || !script.includes('focus_minutes:workMinutes')) throw new Error("missing adaptive focus timer");
+if (!html.includes('id="timerRescue"') || !html.includes('id="rescueDialog"') || !script.includes('function handleRescue') || !script.includes('function saveRescueStep')) throw new Error("missing focus rescue flow");
+if (!html.includes('id="breakGuide"') || !html.includes('id="focusQuickPark"') || !focusRescue.includes('.mission-timer.focus-mode .focus-quick-park')) throw new Error("missing guided break and focus shield");
+if (!html.includes('id="focusReportGrid"') || !html.includes('id="distractionCategory"') || !script.includes('function renderFocusReport') || !script.includes('DISTRACTION_CATEGORIES')) throw new Error("missing weekly distraction report");
 if (!script.includes('function homeworkCarryoverDate') || !script.includes('study-quest-homework-cache-v2') || !script.includes('homework-carry-tag')) throw new Error("missing 9/24 homework carryover");
 if (!script.includes("db.from('homework_progress')") || !script.includes("db.from('review_revives')") || !html.includes('id="revivalSchedule"')) throw new Error("missing cloud homework and mistake revival flow");
 if (script.includes("['2026-09-29','作文'") || script.includes("['2026-09-30','英文聽力'")) throw new Error("first midterm writing/listening review should be excluded");

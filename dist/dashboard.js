@@ -16,10 +16,33 @@
   $$('[data-go-panel]').forEach(button=>button.addEventListener('click',()=>go(button.dataset.goPanel)));
 
   function renderGreeting(){
-    const now=new Date(),hour=now.getHours();
-    const greeting=hour<11?'早安，先完成最小的一步':hour<18?'下午好，把注意力放回眼前這一關':'晚上好，穩穩收尾就很厲害';
-    $('#lifeGreeting').textContent=greeting;
-    $('#lifeDate').textContent=now.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+    const now=new Date();
+    const quotes=[
+      'Small steps still move you forward.',
+      'Your future is built by what you do today.',
+      'Start before you feel ready.',
+      'Focus on the next step, not the whole staircase.',
+      'Discipline carries you when motivation is quiet.',
+      'A little progress every day becomes a big change.',
+      'You do not need to be perfect to make progress.',
+      'The work you do today makes tomorrow lighter.',
+      'Be stronger than your strongest excuse.',
+      'One focused hour can change the direction of your day.',
+      'Keep showing up. Your effort is becoming ability.',
+      'Hard days still count.',
+      'Make today useful, not perfect.',
+      'The secret is simple: begin, then keep going.',
+      'Your only competition is who you were yesterday.',
+      'Do the small thing that your future self will thank you for.',
+      'Progress grows where attention goes.',
+      'You are closer every time you choose to continue.',
+      'Confidence comes after practice, not before it.',
+      'Turn the page. The next attempt can be better.',
+      'Today is another chance to become more capable.'
+    ];
+    const dayNumber=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/86400000);
+    $('#lifeGreeting').textContent=quotes[Math.abs(dayNumber)%quotes.length];
+    $('#lifeDate').textContent=`${now.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'})}・今天也往前一點`;
     const start=new Date(`${mondayKey()}T00:00:00`),end=new Date(start);end.setDate(end.getDate()+6);
     $('#priorityWeekLabel').textContent=`${start.getMonth()+1}/${start.getDate()}–${end.getMonth()+1}/${end.getDate()}`;
   }

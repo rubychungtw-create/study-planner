@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="forest.css" />
   <link rel="stylesheet" href="homework.css" />
   <link rel="stylesheet" href="focus-rescue.css" />
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body data-theme="pink">
   <main class="app">
@@ -40,7 +41,48 @@
       <div class="date-nav"><button class="icon-btn" id="prevDay" aria-label="前一天">‹</button><button class="date-label" id="dateLabel"></button><button class="icon-btn" id="nextDay" aria-label="後一天">›</button></div>
     </header>
 
-    <section class="panel active" id="focusPanel">
+    <section class="panel active" id="homePanel">
+      <section class="life-cover" aria-labelledby="lifeGreeting">
+        <div class="life-cover-copy"><span class="life-page-icon" aria-hidden="true">✦</span><div class="kicker">MY STUDY LIFE</div><h2 id="lifeGreeting">今天只要往前一小步</h2><p id="lifeDate">正在整理今天的作戰頁面…</p></div>
+        <button class="life-primary-action" type="button" data-go-panel="focusPanel"><span>▶</span><b>開始專注</b><small>選一關，先做 15 分鐘</small></button>
+      </section>
+
+      <div class="life-dashboard-grid">
+        <section class="life-block today-overview" aria-labelledby="todayOverviewTitle">
+          <div class="life-block-head"><div><div class="kicker">TODAY AT A GLANCE</div><h3 id="todayOverviewTitle">今天的總覽</h3></div><button type="button" data-go-panel="todayPanel">打開任務 →</button></div>
+          <div class="overview-metrics"><article><span>今日進度</span><b id="homeProgress">0%</b><i><em id="homeProgressBar"></em></i></article><article><span>下一場 BOSS</span><b id="homeBoss">讀取中</b><small id="homeBossCountdown">—</small></article><article><span>專注倒數</span><b id="homeTimer">45:00</b><small id="homeFocusGoal">先選一個唯一目標</small></article></div>
+          <div class="quick-links" aria-label="快速前往"><button type="button" data-go-panel="weekPanel">▦ 週曆</button><button type="button" data-go-panel="homeworkPanel">⌂ 功課</button><button type="button" data-go-panel="examPanel">◆ 週考</button><button type="button" data-go-panel="reviewPanel">✎ 回想</button><button type="button" data-go-panel="statsPanel">♣ 森林</button></div>
+        </section>
+
+        <section class="life-block weekly-priorities" aria-labelledby="weeklyPriorityTitle">
+          <div class="life-block-head"><div><div class="kicker">WEEKLY PRIORITIES</div><h3 id="weeklyPriorityTitle">本週最重要的 3 件事</h3></div><span id="priorityWeekLabel">本週</span></div>
+          <p class="life-help">不是待辦清單，只寫「這週完成就很值得」的三件事。</p>
+          <div class="priority-list"><label><span>1</span><input data-weekly-priority="0" maxlength="80" placeholder="例如：物理第二課完整複習"></label><label><span>2</span><input data-weekly-priority="1" maxlength="80" placeholder="例如：數學影片最後一節＋重做例題"></label><label><span>3</span><input data-weekly-priority="2" maxlength="80" placeholder="例如：化學錯題整理 10 題"></label></div>
+          <div class="auto-save-note" id="prioritySaveState">輸入後自動儲存</div>
+        </section>
+
+        <section class="life-block habit-block" aria-labelledby="habitTitle">
+          <div class="life-block-head"><div><div class="kicker">DAILY RHYTHM</div><h3 id="habitTitle">今天的微習慣</h3></div><b id="habitScore">0 / 4</b></div>
+          <div class="habit-list" id="habitList"><button type="button" data-habit="desk"><span>整理桌面 2 分鐘</span><i>○</i></button><button type="button" data-habit="phone"><span>手機放到拿不到的地方</span><i>○</i></button><button type="button" data-habit="water"><span>準備水，休息不滑短影音</span><i>○</i></button><button type="button" data-habit="recall"><span>睡前回想今天 3 個重點</span><i>○</i></button></div>
+        </section>
+
+        <section class="life-block checkin-block" aria-labelledby="checkinTitle">
+          <div class="life-block-head"><div><div class="kicker">DAILY CHECK-IN</div><h3 id="checkinTitle">現在的能量有多少？</h3></div><span id="checkinResult">尚未選擇</span></div>
+          <p class="life-help">低能量不是偷懶；網站會建議你用比較容易啟動的方式。</p>
+          <div class="energy-picker" role="group" aria-label="選擇目前能量"><button type="button" data-energy="1">😵<span>快沒電</span></button><button type="button" data-energy="2">😮‍💨<span>有點累</span></button><button type="button" data-energy="3">🙂<span>普通</span></button><button type="button" data-energy="4">😎<span>不錯</span></button><button type="button" data-energy="5">🔥<span>滿電</span></button></div>
+          <div class="energy-advice" id="energyAdvice">先選能量，我會幫你決定從 15、25 還是 45 分鐘開始。</div>
+        </section>
+
+        <section class="life-block inbox-block" aria-labelledby="inboxTitle">
+          <div class="life-block-head"><div><div class="kicker">QUICK CAPTURE</div><h3 id="inboxTitle">腦袋收件匣</h3></div><span id="inboxCount">0 則</span></div>
+          <p class="life-help">想到功課、想查的事或怕忘記的事，先丟進來，不要讓它佔住注意力。</p>
+          <form class="inbox-form" id="lifeInboxForm"><input id="lifeInboxInput" maxlength="120" autocomplete="off" placeholder="快速記下一件事…"><button type="submit">＋ 收進來</button></form>
+          <div class="inbox-list" id="lifeInboxList"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" id="focusPanel">
       <article class="boss" id="bossCard"><div class="boss-icon">B</div><div><div class="kicker">下一場 BOSS</div><div class="boss-title" id="bossTitle"></div><div class="boss-scope" id="bossScope"></div></div><div class="countdown" id="bossCountdown"></div></article>
       <div class="focus-tools">
         <section class="focus-widget single-goal-card" aria-labelledby="focusGoalTitle">
@@ -238,7 +280,7 @@
   </section>
   <div class="loading-mask hidden" id="loadingMask"><div><div class="spinner"></div>正在載入你的冒險存檔…</div></div>
   <div class="pet-legacy-hidden" hidden><button id="petCompanion" type="button"><span id="companionBubble"></span><img id="companionImage" alt=""></button><span id="petDisplayName"></span><span id="petStageText"></span><span id="petLevelBadge"></span><span id="petWallet"></span><input id="petNameInput"><span id="feedChances"></span><button id="feedPet" type="button"></button><button id="petPlayAction" type="button"></button><button id="savePetName" type="button"></button><button data-pet="shiba" type="button"></button><button data-pet="cat" type="button"></button><div id="petScene"><img id="petRoomImage" alt=""></div><div id="petFurniture"></div><div id="petStatusBubble"></div><div id="petShop"></div></div>
-  <nav class="bottom-nav" aria-label="主要頁面"><button class="nav-btn active" data-panel="focusPanel">專注</button><button class="nav-btn" data-panel="todayPanel">任務</button><button class="nav-btn" data-panel="homeworkPanel">功課</button><button class="nav-btn" data-panel="weekPanel">週曆</button><button class="nav-btn" data-panel="examPanel">週考</button><button class="nav-btn" data-panel="reviewPanel">回想</button><button class="nav-btn" data-panel="schedulePanel">行程</button><button class="nav-btn" data-panel="statsPanel">森林</button></nav>
+  <nav class="bottom-nav" aria-label="主要頁面"><div class="nav-home-label"><b>Study Quest</b><span>我的學習生活</span></div><button class="nav-btn active" data-panel="homePanel"><span>⌂</span>首頁</button><div class="nav-section-label">專注與任務</div><button class="nav-btn" data-panel="focusPanel"><span>◎</span>專注</button><button class="nav-btn" data-panel="todayPanel"><span>✓</span>任務</button><button class="nav-btn" data-panel="homeworkPanel"><span>▤</span>功課</button><button class="nav-btn" data-panel="weekPanel"><span>▦</span>週曆</button><div class="nav-section-label">回顧與成長</div><button class="nav-btn" data-panel="examPanel"><span>◆</span>週考</button><button class="nav-btn" data-panel="reviewPanel"><span>✎</span>回想</button><button class="nav-btn" data-panel="schedulePanel"><span>↗</span>行程</button><button class="nav-btn" data-panel="statsPanel"><span>♣</span>森林</button></nav>
   <div class="celebrate" id="celebrate"></div><div class="toast" id="toast" role="status"></div>
   <script type="text/plain" id="legacyScript">
     const DAY=86400000, start=new Date('2026-09-12T00:00:00'), end=new Date('2027-01-20T00:00:00');
@@ -275,6 +317,7 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
   <script src="app.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
 

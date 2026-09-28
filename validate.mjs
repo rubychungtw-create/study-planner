@@ -5,7 +5,10 @@ const privacy = fs.readFileSync("dist/privacy.html", "utf8");
 const terms = fs.readFileSync("dist/terms.html", "utf8");
 const worker = fs.readFileSync("worker/index.mjs", "utf8");
 const focusRescue = fs.readFileSync("dist/focus-rescue.css", "utf8");
+const dashboard = fs.readFileSync("dist/dashboard.js", "utf8");
+const dashboardCss = fs.readFileSync("dist/dashboard.css", "utf8");
 new Function(script);
+new Function(dashboard);
 if (!html.includes('id="questMatrix"') || !html.includes('id="googleSignIn"') || !html.includes('id="settingsDialog"')) {
   throw new Error("missing core UI");
 }
@@ -35,6 +38,7 @@ if (!html.includes('data-timer-minutes="15"') || !html.includes('data-timer-minu
 if (!html.includes('id="timerRescue"') || !html.includes('id="rescueDialog"') || !script.includes('function handleRescue') || !script.includes('function saveRescueStep')) throw new Error("missing focus rescue flow");
 if (!html.includes('id="breakGuide"') || !html.includes('id="focusQuickPark"') || !focusRescue.includes('.mission-timer.focus-mode .focus-quick-park')) throw new Error("missing guided break and focus shield");
 if (!html.includes('id="focusReportGrid"') || !html.includes('id="distractionCategory"') || !script.includes('function renderFocusReport') || !script.includes('DISTRACTION_CATEGORIES')) throw new Error("missing weekly distraction report");
+if (!html.includes('id="homePanel"') || !html.includes('id="lifeInboxForm"') || !html.includes('data-weekly-priority="0"') || !dashboard.includes('function setupHabits') || !dashboard.includes('function setupEnergy') || !dashboardCss.includes('.bottom-nav')) throw new Error("missing Notion-inspired life dashboard");
 if (!script.includes('function homeworkCarryoverDate') || !script.includes('study-quest-homework-cache-v2') || !script.includes('homework-carry-tag')) throw new Error("missing 9/24 homework carryover");
 if (!script.includes("db.from('homework_progress')") || !script.includes("db.from('review_revives')") || !html.includes('id="revivalSchedule"')) throw new Error("missing cloud homework and mistake revival flow");
 if (script.includes("['2026-09-29','作文'") || script.includes("['2026-09-30','英文聽力'")) throw new Error("first midterm writing/listening review should be excluded");

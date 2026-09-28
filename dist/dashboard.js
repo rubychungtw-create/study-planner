@@ -26,8 +26,10 @@
 
   function syncOverview(){
     const progress=$('#dailyProgress')?.textContent?.trim()||'0%';
+    const fraction=progress.match(/(\d+)\s*\/\s*(\d+)/),percent=progress.match(/(\d+)\s*%/);
+    const progressWidth=percent?Number(percent[1]):fraction&&Number(fraction[2])?Math.round(Number(fraction[1])/Number(fraction[2])*100):0;
     $('#homeProgress').textContent=progress;
-    $('#homeProgressBar').style.width=progress;
+    $('#homeProgressBar').style.width=`${Math.max(0,Math.min(100,progressWidth))}%`;
     $('#homeBoss').textContent=$('#bossTitle')?.textContent?.trim()||'尚未排定';
     $('#homeBossCountdown').textContent=$('#bossCountdown')?.textContent?.trim()||'—';
     $('#homeTimer').textContent=$('#timerDisplay')?.textContent?.trim()||'45:00';

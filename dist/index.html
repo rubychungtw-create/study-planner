@@ -54,6 +54,13 @@
           <div class="quick-links" aria-label="快速前往"><button type="button" data-go-panel="weekPanel">▦ 週曆</button><button type="button" data-go-panel="homeworkPanel">⌂ 功課</button><button type="button" data-go-panel="examPanel">◆ 週考</button><button type="button" data-go-panel="reviewPanel">✎ 回想</button><button type="button" data-go-panel="statsPanel">♣ 森林</button></div>
         </section>
 
+        <section class="life-block daily-priorities" aria-labelledby="dailyPriorityTitle">
+          <div class="life-block-head"><div><div class="kicker">TODAY'S TOP THREE</div><h3 id="dailyPriorityTitle">今天最重要的 3 件事</h3></div><span id="dailyPriorityDate">今天</span></div>
+          <p class="life-help">今天只守住這三件事；其他事情完成算加分，不用一起壓在心上。</p>
+          <div class="priority-list"><label><span>1</span><input data-daily-priority="0" maxlength="80" placeholder="今天第一件一定要完成的事"></label><label><span>2</span><input data-daily-priority="1" maxlength="80" placeholder="今天第二重要的任務"></label><label><span>3</span><input data-daily-priority="2" maxlength="80" placeholder="今天完成就很棒的第三件事"></label></div>
+          <div class="auto-save-note" id="dailyPrioritySaveState">輸入後自動儲存</div>
+        </section>
+
         <section class="life-block weekly-priorities" aria-labelledby="weeklyPriorityTitle">
           <div class="life-block-head"><div><div class="kicker">WEEKLY PRIORITIES</div><h3 id="weeklyPriorityTitle">本週最重要的 3 件事</h3></div><span id="priorityWeekLabel">本週</span></div>
           <p class="life-help">不是待辦清單，只寫「這週完成就很值得」的三件事。</p>

@@ -43,6 +43,7 @@
     const dayNumber=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/86400000);
     $('#lifeGreeting').textContent=quotes[Math.abs(dayNumber)%quotes.length];
     $('#lifeDate').textContent=`${now.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'})}・今天也往前一點`;
+    $('#dailyPriorityDate').textContent=`${now.getMonth()+1}/${now.getDate()}`;
     const start=new Date(`${mondayKey()}T00:00:00`),end=new Date(start);end.setDate(end.getDate()+6);
     $('#priorityWeekLabel').textContent=`${start.getMonth()+1}/${start.getDate()}–${end.getMonth()+1}/${end.getDate()}`;
   }
@@ -67,6 +68,19 @@
       clearTimeout(saveTimer);
       $('#prioritySaveState').textContent='正在儲存…';
       saveTimer=setTimeout(()=>{const values=inputs.map(item=>item.value.trim());write(`priorities:${mondayKey()}`,values);$('#prioritySaveState').textContent='✓ 已自動儲存'},350);
+    }));
+    load();
+    return load;
+  }
+
+  function setupDailyPriorities(){
+    const inputs=$$('[data-daily-priority]');
+    const load=()=>{const values=read(`daily-priorities:${dayKey()}`,['','','']);inputs.forEach((input,index)=>input.value=values[index]||'')};
+    let saveTimer;
+    inputs.forEach(input=>input.addEventListener('input',()=>{
+      clearTimeout(saveTimer);
+      $('#dailyPrioritySaveState').textContent='正在儲存…';
+      saveTimer=setTimeout(()=>{write(`daily-priorities:${dayKey()}`,inputs.map(item=>item.value.trim()));$('#dailyPrioritySaveState').textContent='✓ 已自動儲存'},350);
     }));
     load();
     return load;
@@ -101,7 +115,7 @@
   }
 
   renderGreeting();
-  const reloadAccountData=[setupPriorities(),setupHabits(),setupEnergy(),setupInbox()];
+  const reloadAccountData=[setupDailyPriorities(),setupPriorities(),setupHabits(),setupEnergy(),setupInbox()];
   syncOverview();
   const targets=['#dailyProgress','#bossTitle','#bossCountdown','#timerDisplay','#focusGoalDisplay'].map($).filter(Boolean);
   const observer=new MutationObserver(syncOverview);targets.forEach(target=>observer.observe(target,{subtree:true,childList:true,characterData:true}));
